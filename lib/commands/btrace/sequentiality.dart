@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:indexed_iterable/indexed_iterable.dart';
 import 'package:args/command_runner.dart';
 import 'package:console/console.dart' as console;
-import 'package:trace_analyzer/image/draw_cdf.dart';
 
+import '../../image/cdf_drawer.dart';
 import '../../utils/progress_printer.dart';
 import '../../utils/validator.dart';
 import '../../utils/btrace_line.dart';
@@ -25,7 +25,7 @@ class SequentialityCommand extends Command {
       ..addOption(
         'threads',
         abbr: 't',
-        defaultsTo: '-1',
+        defaultsTo: -1,
         help:
             'Number of outstanding threads refining btrace files simultaneously. -1 means unlimited.',
       )
@@ -115,10 +115,10 @@ class SequentialityCommand extends Command {
         final outputSuffix = argResults['suffix'];
         final outputFile = File('${filePath.value}.$outputSuffix').openWrite();
         for (final sqData in IndexedMap(sqMap)) {
-          outputFile.writeln('${sqData.key}, ${sqData.value}');
+          outputFile.writeln('${sqData.key} ${sqData.value}');
         }
       }
-      drawCDF(sqMap);
+      final cdfDrawer = CDFDrawer(sqMap)..drawCDF();
     }
     print('Done');
     exitCode = 0;
