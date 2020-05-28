@@ -68,9 +68,16 @@ class DrawSequentiality extends Command {
       await for (final seq in ioStream.IS) {
         final key = int.parse(seq.value.split(' ')[0]);
         final value = int.parse(seq.value.split(' ')[1]);
-        seqMap[key] = value;
+        seqMap[key] = value * key;
       }
-      final cdfDrawer = CDFDrawer(seqMap, width: width, height: height)..drawCDF();
+      final cdfDrawer = CDFDrawer(seqMap, width: width, height: height);
+      cdfDrawer
+        ..drawXticsBottom(tics: List<int>.generate(20, (index) => index * 5))
+        ..drawYticsLeft()
+        ..drawXbarTop()
+        ..drawYbarRight()
+        ..drawCDF();
+      cdfDrawer.saveToFile('test.png');
     }
   }
 

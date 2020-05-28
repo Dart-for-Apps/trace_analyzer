@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Dart",
+            "name": "draw cdf seq",
+            "type": "dart",
+            "request": "launch",
+            "program": "bin/main.dart",
+            "args": [ "draw", "seq", "-f", "~/rocksdb_trace_csoyee4.btrace.seq"],
+            "console": "terminal",
+            "vmAdditionalArgs": [ "--optimization_counter_threshold=-1"]
+        },
+
+        {
+            "name": "btrace seq",
             "program": "bin/main.dart",
             "request": "launch",
             "type": "dart",
             "args": ["btrace", "cont", "-f", "~/rocksdb_trace_csoyee4.btrace", "-t",  "7"],
             "console": "terminal",
+            "vmAdditionalArgs": [ "--optimization_counter_threshold=-1"]
         }
     ]
 }
