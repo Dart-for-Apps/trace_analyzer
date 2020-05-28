@@ -1,7 +1,5 @@
-import 'dart:math';
-
 class BtraceLine {
-  BtraceLine._({
+  const BtraceLine._({
     this.length,
     this.offset,
     this.time,
@@ -29,8 +27,8 @@ class BtraceLine {
         event: _getEventType(split[5]),
         io: _getIOType(split[6]),
         isSyncIO: _isSyncIO(split[6]),
-        offset: split.length >= 8 ? int.parse(split[7]) : 0,
-        length: split.length >= 10 ? int.parse(split[9]) : 0,
+        offset: split.length >= 11 ? int.parse(split[7]) : 0,
+        length: split.length >= 11 ? int.parse(split[9]) : 0,
         process: split.length >= 11 ? split[10] : null,
       );
     } else {
@@ -51,7 +49,7 @@ class BtraceLine {
   final String process;
   @override
   String toString() =>
-      '$devMajor,$devMinor $cpu $seq $time $pi $event $io ${isSyncIO ? 'sync' : 'async'} $offset $length $process';
+      '$devMajor,$devMinor $cpu $seq $time $pid $event $io ${isSyncIO ? 'sync' : 'async'} $offset $length $process';
 }
 
 enum EventType { queue, merge, issue, complete, others }
